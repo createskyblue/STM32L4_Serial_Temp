@@ -1,4 +1,4 @@
-# USART DMA IDLE 串口接收驱动
+# STM32L496 串口接收示例
 
 ## 项目简介
 
@@ -138,8 +138,8 @@ if (len > 0) {
 
 | 文件 | 说明 |
 |------|------|
-| `Drivers/serial_rx/usart_dma_idle.h` | 驱动头文件，定义接口 |
-| `Drivers/serial_rx/usart_dma_idle.c` | 驱动实现，已针对 STM32L4 优化 |
+| `Drivers/app_drv_serial_rx/app_drv_serial_rx.h` | 驱动头文件，定义接口 |
+| `Drivers/app_drv_serial_rx/app_drv_serial_rx.c` | 驱动实现，已针对 STM32L4 优化 |
 
 ---
 
@@ -149,7 +149,7 @@ if (len > 0) {
 
 ### 1. HAL 库适配
 
-修改 `Drivers/serial_rx/usart_dma_idle.c` 中的 HAL 宏：
+修改 `Drivers/app_drv_serial_rx/app_drv_serial_rx.c` 中的 HAL 宏：
 
 ```c
 // STM32L4 使用这些宏
@@ -201,9 +201,9 @@ STM32CubeProgrammer -c port=SWD -w STM32L496_DEMO.hex
 ## 项目文件
 
 ```
-Drivers/serial_rx/
-├── usart_dma_idle.h    # 驱动接口
-└── usart_dma_idle.c    # 驱动实现（STM32L4 适配）
+Drivers/app_drv_serial_rx/
+├── app_drv_serial_rx.h    # 驱动接口
+└── app_drv_serial_rx.c    # 驱动实现（STM32L4 适配）
 ```
 
 ---
