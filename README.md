@@ -47,7 +47,7 @@ STM32L496 高效串口数据接收方案，使用 DMA 循环模式配合空闲�
 ### 1. 初始化队列
 
 ```c
-#include "usart_dma_idle.h"
+#include "app_drv_serial_rx.h"
 #include "app_drv_fifo.h"
 
 #define RX_FIFO_SIZE 256
