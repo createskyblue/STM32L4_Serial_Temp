@@ -109,16 +109,16 @@ void DMA1_Channel5_IRQHandler(void)
 ### 5. 读取数据
 
 ```c
-uint16_t len = app_drv_fifo_length(&usart1_rx_fifo);
-if (len > 0) {
-    uint8_t temp_buf[64];
-    uint16_t read_len = (len > 64) ? 64 : len;
+uint16_t usart1_len = app_drv_fifo_length(&usart1_rx_fifo);
+if (usart1_len > 0 && usart1_tx_busy == 0) {
+    static uint8_t temp_buf[128];
+    uint16_t read_len = (usart1_len > sizeof(temp_buf)) ? sizeof(temp_buf) : usart1_len;
     uint16_t actual_read = read_len;
-    
-    app_drv_fifo_read(&usart1_rx_fifo, temp_buf, &actual_read);
-    
-    if (actual_read > 0) {
-        // 处理数据
+    app_drv_fifo_result_t result = app_drv_fifo_read(&usart1_rx_fifo, temp_buf, &actual_read);
+    if (result == APP_DRV_FIFO_RESULT_SUCCESS && actual_read > 0) {
+        // 将接收到的数据回显到 USART1
+        usart1_tx_busy = 1;
+        HAL_UART_Transmit_DMA(&huart1, temp_buf, actual_read);
     }
 }
 ```
