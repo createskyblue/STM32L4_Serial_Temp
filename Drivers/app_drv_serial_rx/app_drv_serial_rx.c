@@ -35,16 +35,19 @@ void USART_Rx_DMA_Init(USART_DMA_Context* ctx, UART_HandleTypeDef* huart, DMA_Ha
 }
 
 /**
- * @brief 注册用户自定义的队列操作函数
+ * @brief 注册用户自定义的队列操作函数和队列指针
  * @param ctx 指向 USART_DMA_Context 结构体的指针
+ * @param user_queue 用户定义的队列指针
  * @param write_func 用户定义的批量写入函数
  * @param available_func 用户定义的可用空间查询函数
  * @note 允许用户自定义自己的队列实现
  */
-void USART_RegisterQueueOps(USART_DMA_Context* ctx, 
-                           USART_Queue_Write_Func write_func, 
+void USART_RegisterQueueOps(USART_DMA_Context* ctx,
+                           void* user_queue,
+                           USART_Queue_Write_Func write_func,
                            USART_Queue_Available_Func available_func)
 {
+    ctx->user_queue = user_queue;
     ctx->queue_write = write_func;
     ctx->queue_available = available_func;
 }

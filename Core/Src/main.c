@@ -157,10 +157,9 @@ int main(void)
   USART_Rx_DMA_Init(&USART1_DMA_Context, &huart1, &hdma_usart1_rx);
   
   // 设置用户队列指针
-  USART1_DMA_Context.user_queue = &usart1_rx_fifo;
   
-  // 注册用户自定义队列操作函数（所有串口共用同一套函数）
-  USART_RegisterQueueOps(&USART1_DMA_Context, USART_Queue_Write, USART_Queue_Available);
+  // 注册用户自定义队列指针和操作函数
+  USART_RegisterQueueOps(&USART1_DMA_Context, &usart1_rx_fifo, USART_Queue_Write, USART_Queue_Available);
   
   printf("USART DMA IDLE Reception initialized\r\n");
 
