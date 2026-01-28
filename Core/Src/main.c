@@ -88,8 +88,11 @@ uint32_t USART_Queue_Write(void* user_queue, uint8_t* data, uint16_t length)
 // 通用的队列可用空间查询函数（所有串口共用）
 uint32_t USART_Queue_Available(void* user_queue)
 {
-    return (uint32_t)(RX_FIFO_SIZE - app_drv_fifo_length((app_drv_fifo_t*)user_queue));
+    app_drv_fifo_t* fifo = (app_drv_fifo_t*)user_queue;
+    // 从 FIFO 结构体中读取 size，避免硬编码
+    return (uint32_t)(fifo->size - app_drv_fifo_length(fifo));
 }
+
 
 // Printf redirect
 int __io_putchar(int ch)
